@@ -1,6 +1,6 @@
 {
   "homepage": "https://kudou-reira.github.io/portfolio",
-  "name": "art_site",
+  "name": "portfolio",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -16,7 +16,8 @@
     "@material-ui/core": "4.11.0",
     "redux": "4.0.5",
     "redux-logger": "3.0.6",
-    "redux-thunk": "2.3.0"
+    "redux-thunk": "2.3.0",
+    "react-redux": "7.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
