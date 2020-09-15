@@ -12,9 +12,22 @@ class RouteScreen extends Component {
 				<Router>
 					<div>
 						<Switch>
-								{/* <Route exact path="/project/" component={ProjectScreen} /> */}
-								<Route exact path="/" component={defaultScreen} />
-								<Route exact path="/publications/" component={publicationsScreen} />
+							<Route exact path="/" component={defaultScreen} />
+							<Route exact path="/publications" component={defaultScreen} />
+							<Route exact path="/segmentation" component={defaultScreen} />
+							<Route exact path="/style_transfer" component={defaultScreen} />
+
+							<Route exact path="/figure_sculpting" component={defaultScreen} />
+							<Route exact path="/fashion_design" component={defaultScreen} />
+							<Route exact path="/robot_design" component={defaultScreen} />
+							<Route exact path="/character_design" component={defaultScreen} />
+							<Route exact path="/3d_sketches" component={defaultScreen} />
+
+							<Route exact path="/environmental_paintings" component={defaultScreen} />
+							<Route exact path="/2d_studies" component={defaultScreen} />
+							<Route exact path="/2d_sketches" component={defaultScreen} />
+
+							<Route exact path="/about" component={defaultScreen} />
 						</Switch>
 					</div>
 				</Router>

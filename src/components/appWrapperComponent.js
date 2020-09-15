@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import ProjectLayout from './projectLayoutComponent';
 
@@ -20,10 +20,8 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
+
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 
 const drawerWidth = 240;
@@ -89,56 +87,170 @@ export default withRouter(function AppWrapper(props) {
 	const classes = useStyles();
 	const theme = useTheme();
 
-	const [open] = React.useState(true);
+	const [open, setDrawerOpen, setSubOpen] = React.useState(true);
 
-	const handleDrawerOpen = () => {
-		this.setState({ open: true });
-	};
+	// const handleDrawerOpen = () => {
+	// 	this.setState({ open: true });
+	// };
 
-	const handleDrawerClose = () => {
-		this.setState({ open: false });
-	};
+	// const handleDrawerClose = () => {
+	// 	this.setState({ open: false });
+	// };
 
-	const onClickSidebar = (text, path) => {
-		props.history.push(path)
+	const handleDrawerClick = () => {
+		setDrawerOpen(!open);
 	}
 
-	const linkItems = [
+	const onClickSidebar = (text, path) => {
+		props.history.push(path);
+	}
+
+	const projectDetails = [
+		{
+			text: 'Overview',
+			folder_path: 'overview'
+		},
+		{
+			text: 'Final Render',
+			folder_path: 'final'
+		},
+		{
+			text: 'Background',
+			folder_path: 'background'
+		},
+		{
+			text: 'General Process',
+			folder_path: 'general_process'
+		},
+		{
+			text: 'WIP Gallery',
+			folder_path: 'wip'
+		}
+	]
+
+	const categoryItems = [
 		{
 			text: 'Home Page',
 			path: '/',
-			icon: 'N/A'
+			icon: 'N/A',
+			sub_items: 'false'
 		},
 		{
 			text: 'Engineering Projects',
+			icon: 'N/A',
+			sub_items: 'true',
 			path: '/engineering',
-			icon: 'M/A'
+			sub_links: [
+				{
+					text: 'Publications',
+					path: '/publications',
+					icon: 'N/A',
+				},
+				{
+					text: 'Semantic Segmentation',
+					path: '/segmentation',
+					icon: 'N/A',
+				},
+				{
+					text: 'Style Transfer',
+					path: '/style_transfer',
+					icon: 'N/A',
+				}
+			]
 		},
 		{
 			text: '3D Projects',
 			path: '/3d',
-			icon: 'M/A'
+			icon: 'N/A',
+			sub_items: 'true',
+			sub_links: [
+				{
+					text: 'Human Figure Sculpting',
+					path: '/figure_sculpting',
+					icon: 'N/A',
+				},
+				{
+					text: 'Fashion Design',
+					path: '/fashion_design',
+					icon: 'N/A',
+				},
+				{
+					text: 'Robot Design',
+					path: '/robot_design',
+					icon: 'N/A',
+				},
+				{
+					text: 'Character Design',
+					path: '/character_design',
+					icon: 'N/A',
+				},
+				{
+					text: '3D sketches/ideas',
+					path: '/3d_sketches',
+					icon: 'N/A',
+				}
+			],
 		},
 		{
 			text: '2D Projects',
-			path: '/2d',
-			icon: 'M/A'
+			path: '2d',
+			icon: 'N/A',
+			sub_items: 'true',
+			sub_links: [
+				{
+					text: 'Environmental Paintings',
+					path: '/environmental_paintings',
+					icon: 'N/A',
+				},
+				{
+					text: 'Studies',
+					path: '/2d_studies',
+					icon: 'N/A',
+				},
+				{
+					text: '2D sketches/ideas',
+					path: '/2d_sketches',
+					icon: 'N/A',
+				},
+			],
 		},
 		{
 			text: 'About',
 			path: '/about',
-			icon: 'M/A'
+			icon: 'N/A',
+			sub_items: 'false'
 		}
 	];
 
-	const renderComponent = () => {
-		// should i control the route to be rendered here?
+	const searchCategory = (object, pathname) => {
+		if(object.hasOwnProperty('path') && object["path"].replace("/", "") == pathname) {
+			console.log("this is obj", object);
+			return object.text;
+		}
+        	
 
+		for(var i=0; i<Object.keys(object).length; i++){
+			if(typeof object[Object.keys(object)[i]] == "object"){
+				var o = searchCategory(object[Object.keys(object)[i]], pathname);
+				if(o != null)
+					return o;
+			}
+		}
+
+		return null;
+	}
+
+	const renderComponent = () => {
 		let pathname = checkPath();
 		console.log("this is pathname", pathname);
+
 		return(
 			<div>
-				<ProjectLayout />
+				<ProjectLayout 
+					pathname={pathname}
+					projectDetails={projectDetails}
+					projectTitle={searchCategory(categoryItems, pathname)}
+				/>
 			</div>
 		)
 
@@ -169,12 +281,74 @@ export default withRouter(function AppWrapper(props) {
 		return false;
 	}
 
+	const renderMenuOrSubItems = () => {
+		let sidebar = [];
+		let tempItem = '';
+
+		categoryItems.map((obj, index) => {
+			if(obj.sub_items === 'false') {
+				tempItem = (
+					<div>
+						<MenuItem
+							selected={renderSelectedSidebar(obj.path)}
+							button key={obj.text}
+							onClick={() => onClickSidebar(obj.text, obj.path)}
+						>
+							<ListItemText primary={obj.text} />
+						</MenuItem>
+					</div>
+				);
+
+				sidebar.push(tempItem);
+			} else {
+				tempItem = (
+					<div>
+						<MenuItem
+							selected={renderSelectedSidebar(obj.path)}
+							key={obj.text}
+							disabled
+						>
+							<ListItemText primary={obj.text} />
+						</MenuItem>
+						<List component="div" disablePadding>
+							{renderSubItems(obj.sub_links)}
+						</List>
+					</div>
+				);
+
+				sidebar.push(tempItem);
+			}
+		});
+
+		return sidebar;
+	}
+
+	const renderSubItems = (links) => {
+		let subItems = [];
+		let tempItem = '';
+
+		links.map((obj, index) => {
+			tempItem = (
+				<ListItem 
+					button 
+					className={classes.nested}
+					onClick={() => onClickSidebar(obj.text, obj.path)}
+				>
+					<ListItemText secondary={obj.text} style={{paddingLeft: '20px'}} />
+				</ListItem>
+			)
+
+			subItems.push(tempItem);
+		});
+
+		return subItems;
+	}
+
 	const checkPath = () => {
 		let pathname = props.location.pathname.replace('/', '');
 		return pathname;
 	}
 		
-
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
@@ -188,7 +362,7 @@ export default withRouter(function AppWrapper(props) {
 					<IconButton
 						color="inherit"
 						aria-label="Open drawer"
-						onClick={handleDrawerOpen}
+						onClick={handleDrawerClick}
 						className={clsx(classes.menuButton, open && classes.hide)}
 					>
 					<MenuIcon />
@@ -208,22 +382,13 @@ export default withRouter(function AppWrapper(props) {
 				}}
 			>
 				<div className={classes.drawerHeader}>
-					<IconButton onClick={handleDrawerClose}>
+					<IconButton onClick={handleDrawerClick}>
 						{theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
 					</IconButton>
 				</div>
 				<Divider />
 				<List>
-					{linkItems.map((obj, index) => (
-						<MenuItem
-							selected={renderSelectedSidebar(obj.path)}
-							button key={obj.text}
-							onClick={() => onClickSidebar(obj.text, obj.path)}
-						>
-							{/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-							<ListItemText primary={obj.text} />
-						</MenuItem>
-					))}
+					{renderMenuOrSubItems()}
 				</List>
 			</Drawer>
 			<main
