@@ -16,6 +16,7 @@ class RouteScreen extends Component {
 							<Route exact path="/publications" component={defaultScreen} />
 							<Route exact path="/segmentation" component={defaultScreen} />
 							<Route exact path="/style_transfer" component={defaultScreen} />
+							<Route exact path="/anime_charts" component={defaultScreen} />
 
 							<Route exact path="/figure_sculpting" component={defaultScreen} />
 							<Route exact path="/fashion_design" component={defaultScreen} />

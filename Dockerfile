@@ -12,7 +12,11 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install and cache app dependencies
 COPY package.json /app
 RUN npm install
-RUN npm install react-scripts@1.1.1 -g --silent
+# RUN npm install -g customize-cra
+# RUN npm install -g react-app-rewired
+RUN npm install react-scripts@3.4.3 -g --silent
+# RUN npm install -g react-dev-utils@^5.0.2
+
 
 COPY . /app
 # start app

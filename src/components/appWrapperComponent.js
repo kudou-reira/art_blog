@@ -105,13 +105,18 @@ export default withRouter(function AppWrapper(props) {
 		props.history.push(path);
 	}
 
+	// const resourcePath = process.env.PUBLIC_URL + '/portfolio_images/';
+
+	const resourcePath = '../portfolio_images/';
+
+
 	const projectDetails = [
 		{
 			text: 'Overview',
 			folder_path: 'overview'
 		},
 		{
-			text: 'Final Render',
+			text: 'Final',
 			folder_path: 'final'
 		},
 		{
@@ -120,7 +125,7 @@ export default withRouter(function AppWrapper(props) {
 		},
 		{
 			text: 'General Process',
-			folder_path: 'general_process'
+			folder_path: 'process'
 		},
 		{
 			text: 'WIP Gallery',
@@ -154,6 +159,11 @@ export default withRouter(function AppWrapper(props) {
 				{
 					text: 'Style Transfer',
 					path: '/style_transfer',
+					icon: 'N/A',
+				},
+				{
+					text: 'Anime Charts',
+					path: '/anime_charts',
 					icon: 'N/A',
 				}
 			]
@@ -224,7 +234,7 @@ export default withRouter(function AppWrapper(props) {
 
 	const searchCategory = (object, pathname) => {
 		if(object.hasOwnProperty('path') && object["path"].replace("/", "") == pathname) {
-			console.log("this is obj", object);
+			// console.log("this is obj", object);
 			return object.text;
 		}
         	
@@ -242,7 +252,7 @@ export default withRouter(function AppWrapper(props) {
 
 	const renderComponent = () => {
 		let pathname = checkPath();
-		console.log("this is pathname", pathname);
+		// console.log("this is pathname", pathname);
 
 		return(
 			<div>
@@ -250,6 +260,7 @@ export default withRouter(function AppWrapper(props) {
 					pathname={pathname}
 					projectDetails={projectDetails}
 					projectTitle={searchCategory(categoryItems, pathname)}
+					resourcePath={resourcePath}
 				/>
 			</div>
 		)
