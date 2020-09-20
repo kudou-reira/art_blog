@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch, Redirect, Link } from 'react-router-dom';
 
 import defaultScreen from './defaultScreen';
+import homeScreen from './homeScreen';
 import publicationsScreen from './publicationsScreen';
 
 class RouteScreen extends Component {

@@ -7,7 +7,6 @@ class DefaultScreen extends Component {
   render() {
     return (
         <div>
-            This is default screen
             <AppWrapper />
         </div>
     );

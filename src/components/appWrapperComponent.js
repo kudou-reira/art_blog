@@ -149,6 +149,7 @@ export default withRouter(function AppWrapper(props) {
 				{
 					text: 'Publications',
 					path: '/publications',
+					final: '/rehearsal-1.mp4',
 					icon: 'N/A',
 				},
 				{
@@ -234,8 +235,8 @@ export default withRouter(function AppWrapper(props) {
 
 	const searchCategory = (object, pathname) => {
 		if(object.hasOwnProperty('path') && object["path"].replace("/", "") == pathname) {
-			// console.log("this is obj", object);
-			return object.text;
+			console.log("this is hhhhhhhhh", object);
+			return object;
 		}
         	
 
@@ -250,36 +251,37 @@ export default withRouter(function AppWrapper(props) {
 		return null;
 	}
 
+
 	const renderComponent = () => {
 		let pathname = checkPath();
-		// console.log("this is pathname", pathname);
+		console.log("this is pathname", pathname);
 
 		return(
 			<div>
 				<ProjectLayout 
 					pathname={pathname}
 					projectDetails={projectDetails}
-					projectTitle={searchCategory(categoryItems, pathname)}
+					projectAll={searchCategory(categoryItems, pathname)}
 					resourcePath={resourcePath}
 				/>
 			</div>
 		)
 
-		// switch(pathname) {
-		// 	case '':
-		// 		return(
-		// 			<div>
-		// 				<ProjectLayout />
-		// 			</div>
-		// 		)
-		// 		break;
-		// 	default:
-		// 		return(
-		// 			<div>
-		// 				<ProjectLayout />
-		// 			</div>
-		// 		)
-		// }
+		switch(pathname) {
+			case '':
+				return(
+					<div>
+						<ProjectLayout />
+					</div>
+				)
+				break;
+			default:
+				return(
+					<div>
+						<ProjectLayout />
+					</div>
+				)
+		}
 	}
 
 	const renderSelectedSidebar = (path) => {

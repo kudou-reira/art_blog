@@ -14,7 +14,7 @@ class ProjectLayout extends Component {
         this.state = {
             pathname: props.pathname,
             projectDetails: props.projectDetails,
-            projectTitle: props.projectTitle,
+            projectAll: props.projectAll,
             resourcePath: props.resourcePath,
             overview: '',
             final: '',
@@ -29,9 +29,9 @@ class ProjectLayout extends Component {
             if (this.state.pathname !== nextProps.pathname) {
                 this.setState({
                     pathname: nextProps.pathname, 
-                    projectTitle: nextProps.projectTitle, 
+                    projectAll: nextProps.projectAll, 
                     projectDetails: nextProps.projectDetails,
-                    resourcePath: nextProps.resourcePath,
+                    resourcePath: nextProps.resourcePath
                 });
                 console.log("true");
             }
@@ -42,8 +42,6 @@ class ProjectLayout extends Component {
         if(prevState.pathname !== this.state.pathname) {
             let { projectDetails, pathname } = this.state;
 
-            // console.log("this is projectDetails", projectDetails);
-
             let fetchPoints = [];
 
             projectDetails.map((obj, index) => {
@@ -51,6 +49,10 @@ class ProjectLayout extends Component {
 
                 let mdFile = '';
                 let folderPath = obj.folder_path;
+
+                if(pathname === '') {
+                    pathname = 'home';
+                }
 
                 mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
                 fetchPoints.push(mdFile);
@@ -72,9 +74,6 @@ class ProjectLayout extends Component {
 
     async componentDidMount() {
         let { projectDetails, pathname } = this.state;
-
-        // console.log("this is projectDetails", projectDetails);
-
         let fetchPoints = [];
 
         projectDetails.map((obj, index) => {
@@ -82,6 +81,12 @@ class ProjectLayout extends Component {
 
             let mdFile = '';
             let folderPath = obj.folder_path;
+
+            if(pathname === '') {
+                pathname = 'home';
+            }
+
+            console.log("this is pathname", pathname);
 
             mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
             fetchPoints.push(mdFile);
@@ -113,11 +118,25 @@ class ProjectLayout extends Component {
         )
     }
 
+    checkFileFormat(files) {
 
-    renderDetails(detailPath, folderPath) {
+    }
+
+
+    renderDetails(detailPath, folderPath, projectAll) {
         let mdFile = '';
 
+        if('final' in projectAll && folderPath === 'final') {
+            console.log("there are resources to be rendered");
+
+            this.checkFileFormat(projectAll[folderPath]);
+        }
+
         mdFile = <ReactMarkdown source={this.state[folderPath]} />
+        
+        
+
+
         return mdFile;
     }
 
@@ -125,11 +144,11 @@ class ProjectLayout extends Component {
         let textItems = [];
         let tempText = '';
 
-        let { resourcePath, pathname } = this.state;
+        let { resourcePath, pathname, projectAll } = this.state;
 
         tempText = (
             <Typography variant="h2" gutterBottom>
-                {this.state.projectTitle}
+                {projectAll.text}
             </Typography>
         );
 
@@ -140,7 +159,7 @@ class ProjectLayout extends Component {
                 <Typography variant="h4" gutterBottom>
                     {obj.text}
                     <Typography gutterBottom>
-                        {this.renderDetails(pathname  + "/" + obj.folder_path, obj.folder_path)}
+                        {this.renderDetails(pathname  + "/" + obj.folder_path, obj.folder_path, projectAll)}
                     </Typography>
                 </Typography>
             )
