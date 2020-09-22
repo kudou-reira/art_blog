@@ -16,6 +16,7 @@ RUN npm install
 # RUN npm install -g react-app-rewired
 RUN npm install react-scripts@3.4.3 -g --silent
 # RUN npm install -g react-dev-utils@^5.0.2
+RUN npm install react-dev-utils@10.0.0
 
 
 COPY . /app

@@ -149,7 +149,7 @@ export default withRouter(function AppWrapper(props) {
 				{
 					text: 'Publications',
 					path: '/publications',
-					final: '/rehearsal-1.mp4',
+					final: ['/rehearsal-1.mp4'],
 					icon: 'N/A',
 				},
 				{

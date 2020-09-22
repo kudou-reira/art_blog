@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, lazy, Suspense } from 'react';
 import {withRouter} from 'react-router';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
@@ -6,6 +6,7 @@ import * as actions from '../actions';
 import Typography from '@material-ui/core/Typography';
 import { requirePropFactory } from '@material-ui/core';
 import ReactMarkdown from 'react-markdown';
+// import {importMDX} from 'mdx.macro';
 
 
 class ProjectLayout extends Component {
@@ -39,42 +40,43 @@ class ProjectLayout extends Component {
     }
 
     async componentDidUpdate(prevProps, prevState) {
-        if(prevState.pathname !== this.state.pathname) {
-            let { projectDetails, pathname } = this.state;
+        // if(prevState.pathname !== this.state.pathname) {
+        //     let { projectDetails, pathname } = this.state;
 
-            let fetchPoints = [];
+        //     let fetchPoints = [];
 
-            projectDetails.map((obj, index) => {
-                // console.log("this is obj", obj);
+        //     projectDetails.map((obj, index) => {
+        //         // console.log("this is obj", obj);
 
-                let mdFile = '';
-                let folderPath = obj.folder_path;
+        //         let mdFile = '';
+        //         let folderPath = obj.folder_path;
 
-                if(pathname === '') {
-                    pathname = 'home';
-                }
+        //         if(pathname === '') {
+        //             pathname = 'home';
+        //         }
 
-                mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
-                fetchPoints.push(mdFile);
+        //         mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
+        //         fetchPoints.push(mdFile);
                 
-                // build an array of fetches with mdFile as the endpoint
-            });
+        //         // build an array of fetches with mdFile as the endpoint
+        //     });
 
-            const files = await Promise.all(fetchPoints.map((file) => fetch(file). then((res) => res.text()))).catch((err) => console.error(err));
+        //     const files = await Promise.all(fetchPoints.map((file) => fetch(file). then((res) => res.text()))).catch((err) => console.error(err));
             
-            this.setState({
-                overview: files[0],
-                final: files[1],
-                background: files[2],
-                process: files[3],
-                wip: files[4]
-            })
-        }
+        //     this.setState({
+        //         overview: files[0],
+        //         final: files[1],
+        //         background: files[2],
+        //         process: files[3],
+        //         wip: files[4]
+        //     })
+        // }
     }
 
     async componentDidMount() {
         let { projectDetails, pathname } = this.state;
         let fetchPoints = [];
+        const babelLiteral = '!babel-loader!mdx-loader!';
 
         projectDetails.map((obj, index) => {
             // console.log("this is obj", obj);
@@ -86,23 +88,35 @@ class ProjectLayout extends Component {
                 pathname = 'home';
             }
 
-            console.log("this is pathname", pathname);
+            // mdFile = lazy(() => import(babelLiteral + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md"));
 
-            mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
-            fetchPoints.push(mdFile);
+            // console.log("this is mdFIle", mdFile);
+
+            // mdFile = lazy(() => importMDX("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md"));
+            // mdFile = importMDX.sync("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md").then(component => {
+            //     console.log(component, "loaded successfully");
+            // });
+
+            // console.log()
+
+            // console.log("this is pathname", pathname);
+
+            // mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
+            // fetchPoints.push(mdFile);
+
             
             // build an array of fetches with mdFile as the endpoint
         });
 
-        const files = await Promise.all(fetchPoints.map((file) => fetch(file). then((res) => res.text()))).catch((err) => console.error(err));
+        // const files = await Promise.all(fetchPoints.map((file) => fetch(file). then((res) => res.text()))).catch((err) => console.error(err));
         
-        this.setState({
-            overview: files[0],
-            final: files[1],
-            background: files[2],
-            process: files[3],
-            wip: files[4]
-        })
+        // this.setState({
+        //     overview: files[0],
+        //     final: files[1],
+        //     background: files[2],
+        //     process: files[3],
+        //     wip: files[4]
+        // })
 
     }
 
@@ -124,7 +138,9 @@ class ProjectLayout extends Component {
 
 
     renderDetails(detailPath, folderPath, projectAll) {
-        let mdFile = '';
+        let { pathname } = this.state;
+        // let mdFile = '';
+        
 
         if('final' in projectAll && folderPath === 'final') {
             console.log("there are resources to be rendered");
@@ -132,12 +148,25 @@ class ProjectLayout extends Component {
             this.checkFileFormat(projectAll[folderPath]);
         }
 
-        mdFile = <ReactMarkdown source={this.state[folderPath]} />
-        
-        
+        // mdFile = <ReactMarkdown source={this.state[folderPath]} />
+        console.log("this is detailPath", detailPath);
+        console.log("this is folderPath", folderPath);
+
+        const MdFile = lazy(async() => (await import('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".mdx")));
+
+        return(
+            <div>
+                <Suspense fallback={<h1>Loading...</h1>}>
+                    <MdFile
+                        pathname={pathname}
+                        folderPath={folderPath}
+                    />
+                </Suspense>
+            </div>
+        )
 
 
-        return mdFile;
+        // return mdFile;
     }
 
     renderText() {
