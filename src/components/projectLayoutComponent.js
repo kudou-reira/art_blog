@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { requirePropFactory } from '@material-ui/core';
 import ReactMarkdown from 'react-markdown';
 
+import ImageGallery from './imageGalleryComponent';
 
 // import {importMDX} from 'mdx.macro';
 
@@ -91,7 +92,9 @@ class ProjectLayout extends Component {
 
         if(pathname === '') {
 			this.setState({ pathname: 'home' });
-		}
+        }
+
+
 
         projectDetails.map((obj, index) => {
             // console.log("this is obj", obj);
@@ -157,6 +160,18 @@ class ProjectLayout extends Component {
         return r.keys().map(r);
     }
 
+    testFunction() {
+        return 2 + 4;
+    }
+
+    checkSwitchPath(folderPath) {
+        switch(folderPath) {
+            case 'robot_design':
+                return this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'figure_sculpting':
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+        }
+    }
 
     renderDetails(detailPath, folderPath, projectAll) {
         let { pathname } = this.state;
@@ -178,8 +193,8 @@ class ProjectLayout extends Component {
         const MdFile = lazy(async() => (await import('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".mdx")));
 
 
-
-        // let imageDir = 
+        // use a switch statement here to check all context files
+        // return a different string based on each pathname
 
         console.log("this is folderPath", folderPath);
 
@@ -188,7 +203,25 @@ class ProjectLayout extends Component {
         if (folderPath === 'wip') {
             renderGallery = true;
             console.log("this is renderGallery", renderGallery);
+
+            var context = this.checkSwitchPath(pathname);
+
+            // var context = this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+
+            console.log("before");
+            console.log("this is contex", context);
+    
+    
+            // store the new photo array here
+            let photos = '';
+    
         }
+
+        
+
+        // const wipImages = lazy(async() => (await listReactFiles('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + "images")));
+
+        // console.log("this is wipImages", wipImages);
 
 
         // let ImageGallery = lazy(async() => (await import('./imageGalleryComponent')));
@@ -228,21 +261,21 @@ class ProjectLayout extends Component {
 
         // <img src={img} />
 
-        else {
-            return(
-                <div>
-                    <Suspense fallback={<h1>Loading...</h1>}>
-                        <MdFile
-                            pathname={pathname}
-                            folderPath={folderPath}
-                            test={'working?'}
-                            importAll={this.importAll}
-                            // imageGallery={renderGallery ? <ImageGallery photos={wipImages} /> : null}
-                        />
-                    </Suspense>
-                </div>
-            )
-        }
+        // else {
+        //     return(
+        //         <div>
+        //             <Suspense fallback={<h1>Loading...</h1>}>
+        //                 <MdFile
+        //                     pathname={pathname}
+        //                     folderPath={folderPath}
+        //                     test={'working?'}
+        //                     importAll={this.importAll}
+        //                     // imageGallery={renderGallery ? <ImageGallery photos={wipImages} /> : null}
+        //                 />
+        //             </Suspense>
+        //         </div>
+        //     )
+        // }
 
         return(
             <div>
@@ -252,7 +285,8 @@ class ProjectLayout extends Component {
                         folderPath={folderPath}
                         test={'working?'}
                         importAll={this.importAll}
-                        // imageGallery={renderGallery ? <ImageGallery photos={wipImages} /> : null}
+                        testFunction={this.testFunction}
+                        ImageGallery={<ImageGallery />}
                     />
                 </Suspense>
             </div>

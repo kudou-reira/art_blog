@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "0.20.0",
     "customize-cra": "1.0.0",
+    "list-react-files": "^0.2.0",
     "lodash": "4.17.20",
     "mdx-loader": "3.0.2",
     "mdx.macro": "0.2.9",
