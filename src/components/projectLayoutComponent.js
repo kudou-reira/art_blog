@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { requirePropFactory } from '@material-ui/core';
 import ReactMarkdown from 'react-markdown';
 
-import ImageGallery from './imageGalleryComponent';
+
 // import {importMDX} from 'mdx.macro';
 
 
@@ -151,6 +151,12 @@ class ProjectLayout extends Component {
 
     }
 
+    importAll(r) {
+        // console.log("this is import all");
+        // console.log(r.keys().map(r));
+        return r.keys().map(r);
+    }
+
 
     renderDetails(detailPath, folderPath, projectAll) {
         let { pathname } = this.state;
@@ -172,13 +178,81 @@ class ProjectLayout extends Component {
         const MdFile = lazy(async() => (await import('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".mdx")));
 
 
+
+        // let imageDir = 
+
+        console.log("this is folderPath", folderPath);
+
+        let renderGallery = '';
+
+        if (folderPath === 'wip') {
+            renderGallery = true;
+            console.log("this is renderGallery", renderGallery);
+        }
+
+
+        // let ImageGallery = lazy(async() => (await import('./imageGalleryComponent')));
+
+        // let wipImages = lazy(async() => (await importAll(require.context('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + "images", false, /\.(png|jpe?g|svg)$/))));
+
+        
+
+        // if(renderGallery) {
+        //     const ImageGallery = lazy(async() => (await import('./imageGalleryComponent')));
+
+        //     let wipImages = lazy(async() => (await this.importAll(require.context('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + "images", false, /\.(png|jpe?g|svg)$/))));
+
+        //     console.log("this is wipImages", wipImages);
+
+
+        //     return(
+        //         <div>
+        //             <Suspense fallback={<h1>Loading...</h1>}>
+        //                 <MdFile
+        //                     pathname={pathname}
+        //                     folderPath={folderPath}
+        //                     test={'working?'}
+        //                     importAll={this.importAll}
+        //                     imageGallery={<ImageGallery photos={wipImages} />}
+        //                 />
+        //             </Suspense>
+        //         </div>
+        //     )
+        // }
+
+        
+
+        // import ImageGallery from './imageGalleryComponent';
+
+        // <div>{props.importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/))}</div>
+
+        // <img src={img} />
+
+        else {
+            return(
+                <div>
+                    <Suspense fallback={<h1>Loading...</h1>}>
+                        <MdFile
+                            pathname={pathname}
+                            folderPath={folderPath}
+                            test={'working?'}
+                            importAll={this.importAll}
+                            // imageGallery={renderGallery ? <ImageGallery photos={wipImages} /> : null}
+                        />
+                    </Suspense>
+                </div>
+            )
+        }
+
         return(
             <div>
                 <Suspense fallback={<h1>Loading...</h1>}>
                     <MdFile
                         pathname={pathname}
                         folderPath={folderPath}
-                        test={'help'}
+                        test={'working?'}
+                        importAll={this.importAll}
+                        // imageGallery={renderGallery ? <ImageGallery photos={wipImages} /> : null}
                     />
                 </Suspense>
             </div>
