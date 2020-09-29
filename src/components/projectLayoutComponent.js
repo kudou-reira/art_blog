@@ -6,6 +6,8 @@ import * as actions from '../actions';
 import Typography from '@material-ui/core/Typography';
 import { requirePropFactory } from '@material-ui/core';
 import ReactMarkdown from 'react-markdown';
+
+import ImageGallery from './imageGalleryComponent';
 // import {importMDX} from 'mdx.macro';
 
 
@@ -39,7 +41,14 @@ class ProjectLayout extends Component {
         }
     }
 
-    async componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps, prevState) {
+        let { pathname } = this.state;
+        if(prevState.pathname !== this.state.pathname) {
+            if(pathname === '') {
+                this.setState({ pathname: 'home' });
+            }
+        }
+
         // if(prevState.pathname !== this.state.pathname) {
         //     let { projectDetails, pathname } = this.state;
 
@@ -73,10 +82,16 @@ class ProjectLayout extends Component {
         // }
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         let { projectDetails, pathname } = this.state;
         let fetchPoints = [];
         const babelLiteral = '!babel-loader!mdx-loader!';
+
+        console.log("this is pathname", pathname);
+
+        if(pathname === '') {
+			this.setState({ pathname: 'home' });
+		}
 
         projectDetails.map((obj, index) => {
             // console.log("this is obj", obj);
@@ -84,9 +99,9 @@ class ProjectLayout extends Component {
             let mdFile = '';
             let folderPath = obj.folder_path;
 
-            if(pathname === '') {
-                pathname = 'home';
-            }
+            // if(pathname === '') {
+            //     pathname = 'home';
+            // }
 
             // mdFile = lazy(() => import(babelLiteral + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md"));
 
@@ -146,13 +161,16 @@ class ProjectLayout extends Component {
             console.log("there are resources to be rendered");
 
             this.checkFileFormat(projectAll[folderPath]);
-        }
+        } 
 
         // mdFile = <ReactMarkdown source={this.state[folderPath]} />
         console.log("this is detailPath", detailPath);
         console.log("this is folderPath", folderPath);
 
+        
+
         const MdFile = lazy(async() => (await import('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".mdx")));
+
 
         return(
             <div>
@@ -160,6 +178,7 @@ class ProjectLayout extends Component {
                     <MdFile
                         pathname={pathname}
                         folderPath={folderPath}
+                        test={'help'}
                     />
                 </Suspense>
             </div>

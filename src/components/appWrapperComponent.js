@@ -209,8 +209,8 @@ export default withRouter(function AppWrapper(props) {
 			sub_items: 'true',
 			sub_links: [
 				{
-					text: 'Environmental Paintings',
-					path: '/environmental_paintings',
+					text: 'Paintings',
+					path: '/paintings',
 					icon: 'N/A',
 				},
 				{
