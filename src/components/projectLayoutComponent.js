@@ -5,11 +5,8 @@ import * as actions from '../actions';
 
 import Typography from '@material-ui/core/Typography';
 import { requirePropFactory } from '@material-ui/core';
-import ReactMarkdown from 'react-markdown';
 
 import ImageGallery from './imageGalleryComponent';
-
-// import {importMDX} from 'mdx.macro';
 
 
 class ProjectLayout extends Component {
@@ -24,7 +21,9 @@ class ProjectLayout extends Component {
             final: '',
             background: '',
             process: '',
-            wip: ''
+            wip: '',
+            isLoading: true,
+            photos: undefined
         };
     }
 
@@ -35,56 +34,37 @@ class ProjectLayout extends Component {
                     pathname: nextProps.pathname, 
                     projectAll: nextProps.projectAll, 
                     projectDetails: nextProps.projectDetails,
-                    resourcePath: nextProps.resourcePath
+                    resourcePath: nextProps.resourcePath,
+                    photos: undefined, 
+                    isLoading: true 
                 });
-                console.log("true");
+                console.log("true, component will receive props");
             }
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
-        let { pathname } = this.state;
+    async componentDidUpdate(prevProps, prevState) {
+        const { projectDetails, pathname } = this.state;
+        var context = '';
+        let tempPhotos = [];
+        
         if(prevState.pathname !== this.state.pathname) {
             if(pathname === '') {
-                this.setState({ pathname: 'home' });
+                this.setState({ 
+                    pathname: 'home',
+                });
             }
+
+            var context = this.checkSwitchPath(pathname);
+            tempPhotos = await this.generatePhotos(context);
+            this.setState({ photos: tempPhotos, isLoading: false });
         }
-
-        // if(prevState.pathname !== this.state.pathname) {
-        //     let { projectDetails, pathname } = this.state;
-
-        //     let fetchPoints = [];
-
-        //     projectDetails.map((obj, index) => {
-        //         // console.log("this is obj", obj);
-
-        //         let mdFile = '';
-        //         let folderPath = obj.folder_path;
-
-        //         if(pathname === '') {
-        //             pathname = 'home';
-        //         }
-
-        //         mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
-        //         fetchPoints.push(mdFile);
-                
-        //         // build an array of fetches with mdFile as the endpoint
-        //     });
-
-        //     const files = await Promise.all(fetchPoints.map((file) => fetch(file). then((res) => res.text()))).catch((err) => console.error(err));
-            
-        //     this.setState({
-        //         overview: files[0],
-        //         final: files[1],
-        //         background: files[2],
-        //         process: files[3],
-        //         wip: files[4]
-        //     })
-        // }
     }
 
-    componentDidMount() {
-        let { projectDetails, pathname } = this.state;
+    async componentDidMount() {
+        const { projectDetails, pathname } = this.state;
+        let tempPhotos = [];
+        var context = '';
         let fetchPoints = [];
         const babelLiteral = '!babel-loader!mdx-loader!';
 
@@ -94,56 +74,18 @@ class ProjectLayout extends Component {
 			this.setState({ pathname: 'home' });
         }
 
+        context = this.checkSwitchPath(pathname);
+        tempPhotos = await this.generatePhotos(context);
 
-
-        projectDetails.map((obj, index) => {
-            // console.log("this is obj", obj);
-
-            let mdFile = '';
-            let folderPath = obj.folder_path;
-
-            // if(pathname === '') {
-            //     pathname = 'home';
-            // }
-
-            // mdFile = lazy(() => import(babelLiteral + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md"));
-
-            // console.log("this is mdFIle", mdFile);
-
-            // mdFile = lazy(() => importMDX("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md"));
-            // mdFile = importMDX.sync("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md").then(component => {
-            //     console.log(component, "loaded successfully");
-            // });
-
-            // console.log()
-
-            // console.log("this is pathname", pathname);
-
-            // mdFile = require("../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".md");
-            // fetchPoints.push(mdFile);
-
-            
-            // build an array of fetches with mdFile as the endpoint
+        this.setState({ 
+            photos: tempPhotos, 
+            isLoading: false 
         });
-
-        // const files = await Promise.all(fetchPoints.map((file) => fetch(file). then((res) => res.text()))).catch((err) => console.error(err));
-        
-        // this.setState({
-        //     overview: files[0],
-        //     final: files[1],
-        //     background: files[2],
-        //     process: files[3],
-        //     wip: files[4]
-        // })
-
     }
 
 
     renderProjectLayoutDisplay() {
         return (
-            // <ImageResults 
-            //     database={this.state.database_id}
-            // />
             <div>
                 {this.renderText()}
             </div>
@@ -165,16 +107,130 @@ class ProjectLayout extends Component {
     }
 
     checkSwitchPath(folderPath) {
+        // webpack requires literal path at build time
+
         switch(folderPath) {
-            case 'robot_design':
-                return this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'publications':
+                return this.importAll(require.context("../portfolio_images/publications/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'segmentation':
+                return this.importAll(require.context("../portfolio_images/segmentation/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'style_transfer':
+                return this.importAll(require.context("../portfolio_images/style_transfer/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'anime_charts':
+                return this.importAll(require.context("../portfolio_images/anime_charts/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
             case 'figure_sculpting':
                 return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'fashion_design':
+                return this.importAll(require.context("../portfolio_images/fashion_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'robot_design':
+                return this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'character_design':
+                return this.importAll(require.context("../portfolio_images/character_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '3d_sketches':
+                return this.importAll(require.context("../portfolio_images/3d_sketches/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'paintings':
+                return this.importAll(require.context("../portfolio_images/paintings/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '2d_studies':
+                return this.importAll(require.context("../portfolio_images/2d_studies/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '2d_sketches':
+                return this.importAll(require.context("../portfolio_images/2d_sketches/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'figure_sculpting':
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            default:
+                return this.importAll(require.context("../portfolio_images/home/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
         }
     }
 
+    nearestAspectRatio(width, height, side) {
+        var
+        ratioX=0,
+        ratio = (width * 100) / (height * 100),
+        maxW = 3 in arguments ? arguments[2] : 16,
+        maxH = 4 in arguments ? arguments[3] : 16,
+        ratiosW = new Array(maxW).join(',').split(','),
+        ratiosH = new Array(maxH).join(',').split(','),
+        ratiosT = {},
+        ratios = {},
+        match,
+        key;
+
+        ratiosW.forEach(function (empty, ratioW) {
+            ++ratioW;
+
+            ratiosH.forEach(function (empty, ratioH) {
+                ++ratioH;
+
+                ratioX = (ratioW * 100) / (ratioH * 100);
+
+                if (!ratiosT[ratioX]) {
+                    ratiosT[ratioX] = true;
+
+                    ratios[ratioW + ':' + ratioH] = ratioX;
+                }
+            });
+        });
+
+        for (key in ratios) {
+            if (!match || (
+                !side && Math.abs(ratio - ratios[key]) < Math.abs(ratio - ratios[match])
+            ) || (
+                side < 0 && ratios[key] <= ratio && Math.abs(ratio - ratios[key]) < Math.abs(ratio - ratios[match])
+            ) || (
+                side > 0 && ratios[key] >= ratio && Math.abs(ratio - ratios[key]) < Math.abs(ratio - ratios[match])
+            )) {
+                match = key;
+            }
+        }
+        
+        return match;
+    }
+
+
+    getDimensions(url) {
+        return new Promise((resolve, reject) => {
+            var img = new Image();
+            img.onload = () => resolve([img.width, img.height]);
+            img.onerror = reject;
+            img.src = url;
+        });
+    }
+
+    async getImgSrc(context) {
+        let photos = [];
+
+        console.log("this is context", context);
+        await Promise.all(context.map(async (file) => {
+            let dimensions = await this.getDimensions(file);
+
+            // ar is a string
+            let ar = this.nearestAspectRatio(dimensions[0], dimensions[1]);
+            var[width, height] = ar.split(":");    
+
+            photos.push({
+                src: file,
+                width,
+                height,
+            });
+        }));
+
+        return photos;
+    }
+
+    async generatePhotos(context) {
+        let photos = [];
+        let ar = 0;
+        let newWidth = 0;
+        let newHeight = 0;
+        
+        photos = await this.getImgSrc(context);
+
+        console.log("intermediary photos", photos);
+
+        return photos;
+    }
+
     renderDetails(detailPath, folderPath, projectAll) {
-        let { pathname } = this.state;
+        let { pathname, isLoading, photos } = this.state;
         // let mdFile = '';
         
 
@@ -182,12 +238,7 @@ class ProjectLayout extends Component {
             console.log("there are resources to be rendered");
 
             this.checkFileFormat(projectAll[folderPath]);
-        } 
-
-        // mdFile = <ReactMarkdown source={this.state[folderPath]} />
-        console.log("this is detailPath", detailPath);
-        console.log("this is folderPath", folderPath);
-
+        }
         
 
         const MdFile = lazy(async() => (await import('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + ".mdx")));
@@ -195,87 +246,42 @@ class ProjectLayout extends Component {
 
         // use a switch statement here to check all context files
         // return a different string based on each pathname
-
         console.log("this is folderPath", folderPath);
 
-        let renderGallery = '';
+        // let tempPhotos = [];
 
         if (folderPath === 'wip') {
-            renderGallery = true;
-            console.log("this is renderGallery", renderGallery);
-
             var context = this.checkSwitchPath(pathname);
 
             // var context = this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
 
             console.log("before");
-            console.log("this is contex", context);
+            console.log("this is context", context);
     
     
-            // store the new photo array here
-            let photos = '';
-    
+            // create the new photo array here
+            // need to make this async somehow
+            // suspense will provide a loading spinner
+            if(isLoading) {
+                return(
+                    <div >
+                        Loading...
+                    </div>
+                )
+            }
+
+            return (
+                <div>
+                    <Suspense fallback={<h1>Loading...</h1>}>
+                        <MdFile
+                            pathname={pathname}
+                            folderPath={folderPath}
+                            ImageGallery={<ImageGallery photos={this.state.photos} />}
+                        />
+                    </Suspense>
+                </div>
+            )             
         }
-
-        
-
-        // const wipImages = lazy(async() => (await listReactFiles('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + "images")));
-
-        // console.log("this is wipImages", wipImages);
-
-
-        // let ImageGallery = lazy(async() => (await import('./imageGalleryComponent')));
-
-        // let wipImages = lazy(async() => (await importAll(require.context('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + "images", false, /\.(png|jpe?g|svg)$/))));
-
-        
-
-        // if(renderGallery) {
-        //     const ImageGallery = lazy(async() => (await import('./imageGalleryComponent')));
-
-        //     let wipImages = lazy(async() => (await this.importAll(require.context('!babel-loader!mdx-loader!' + "../portfolio_images/" + pathname + "/" + folderPath + "/" + folderPath + "images", false, /\.(png|jpe?g|svg)$/))));
-
-        //     console.log("this is wipImages", wipImages);
-
-
-        //     return(
-        //         <div>
-        //             <Suspense fallback={<h1>Loading...</h1>}>
-        //                 <MdFile
-        //                     pathname={pathname}
-        //                     folderPath={folderPath}
-        //                     test={'working?'}
-        //                     importAll={this.importAll}
-        //                     imageGallery={<ImageGallery photos={wipImages} />}
-        //                 />
-        //             </Suspense>
-        //         </div>
-        //     )
-        // }
-
-        
-
-        // import ImageGallery from './imageGalleryComponent';
-
-        // <div>{props.importAll(require.context('./images', false, /\.(png|jpe?g|svg)$/))}</div>
-
-        // <img src={img} />
-
-        // else {
-        //     return(
-        //         <div>
-        //             <Suspense fallback={<h1>Loading...</h1>}>
-        //                 <MdFile
-        //                     pathname={pathname}
-        //                     folderPath={folderPath}
-        //                     test={'working?'}
-        //                     importAll={this.importAll}
-        //                     // imageGallery={renderGallery ? <ImageGallery photos={wipImages} /> : null}
-        //                 />
-        //             </Suspense>
-        //         </div>
-        //     )
-        // }
 
         return(
             <div>
@@ -283,15 +289,10 @@ class ProjectLayout extends Component {
                     <MdFile
                         pathname={pathname}
                         folderPath={folderPath}
-                        test={'working?'}
-                        importAll={this.importAll}
-                        testFunction={this.testFunction}
-                        ImageGallery={<ImageGallery />}
                     />
                 </Suspense>
             </div>
         )
-
 
         // return mdFile;
     }
