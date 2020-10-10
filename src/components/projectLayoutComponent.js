@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { requirePropFactory } from '@material-ui/core';
 
 import ImageGallery from './imageGalleryComponent';
+import MarmosetViewer from './marmosetViewerComponent';
 
 
 class ProjectLayout extends Component {
@@ -282,6 +283,20 @@ class ProjectLayout extends Component {
                 </div>
             )             
         }
+
+        // if (folderPath === 'final') {
+        //     return (
+        //         <div>
+        //             <Suspense fallback={<h1>Loading...</h1>}>
+        //                 <MdFile
+        //                     pathname={pathname}
+        //                     folderPath={folderPath}
+        //                     MarmosetViewer={<MarmosetViewer />}
+        //                 />
+        //             </Suspense>
+        //         </div>
+        //     )    
+        // }
 
         return(
             <div>
