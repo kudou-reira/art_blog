@@ -1,84 +1,121 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useState, Suspense } from 'react';
+import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
+import useScript from './useScript';
+import mview from '../portfolio_images/fashion_design/final/images/clothes_1.mview';
+import DOMPortal from './domPortalComponent';
 
 // import marmosetViewerComponent in project layout, pass it down, render
 
-function new_script(src) {
-    return new Promise(function(resolve, reject){
-        var script = document.createElement('script');
-        script.src = src;
-        script.addEventListener('load', function () {
-            resolve();
-        });
-        script.addEventListener('error', function (e) {
-            reject(e);
-        });
-        document.body.appendChild(script);
-    })
-};
-
-  // Promise Interface can ensure load the script only once.
-var marmoset = new_script('../lib/marmoset.js');
-
-{/* <iframe src='./images/clothes_1.html' allowfullscreen=”true” height=”800″ width=”600″></iframe> */}
+// document.addEventListener('DOMContentLoaded', (event) => {
+//     //the event occurred
+//     console.log("this is dom content stuff");
+// })
 
 
 class MarmosetViewer extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            state: 'start'
-        }
     }
 
-    do_load = () => {
-        var self = this;
-        marmoset.then(function() {
-            self.setState({'status': 'done'});
-        }).catch(function() {
-            self.setState({'status': 'error'});
-        })
-    }
-    
-    render() {
-        var self = this;
-        if (self.state.status === 'start') {
-          self.state.status = 'loading';
-          setTimeout(function () {
-              self.do_load()
-            }, 0);
-        }
+    componentDidMount() {
+        console.log("this is window", window);
 
         var params = { width: 1024, height: 768, autoStart: false };
-        var myviewer = marmoset.embed( "../portfolio_images/fashion_design/final/images/clothes_1.mview", params );
+        // var myviewer = window.marmoset.embed(mview, params);
+        console.log("this is marmoset");
+        // console.log("this is window marmoset", window.marmoset.embed());
+        
+        var myViewer = new window.marmoset.WebViewer(1024, 768, mview);
+        // var tempHolder = React.createElement("div", {className: 'container'}, myViewer.domRoot);
+
+        console.log("this is myviewer dom root", myViewer.domRoot);
+        console.log("this is type myviewer dom root", typeof(myViewer.domRoot));
+
+        this.refs.marmosetTarget.appendChild(myViewer.domRoot);
+    }
+
+    // componentWillUnmount() {
+    //     this.refs.marmosetTarget.removeChild(myViewer.domRoot);
+    // }
+
     
-        return (
+    render() {    
+        console.log("this is window", window);
+
+        var params = { width: 1024, height: 768, autoStart: false };
+        // var myviewer = window.marmoset.embed(mview, params);
+        console.log("this is marmoset");
+        // console.log("this is window marmoset", window.marmoset.embed());
+        
+        var myViewer = new window.marmoset.WebViewer(1024, 768, mview);
+        // var tempHolder = React.createElement("div", {className: 'container'}, myViewer.domRoot);
+
+        console.log("this is myviewer dom root", myViewer.domRoot);
+        console.log("this is type myviewer dom root", typeof(myViewer.domRoot));
+        
+        return(
             <div>
-                {myviewer}
+                This is MarmosetViewer
+                <Suspense fallback={<h1>Loading...</h1>}>
+                    {/* <div ref={ref => ref.appendChild(myViewer.domRoot)}> */}
+                    <div ref='marmosetTarget'></div>
+                    {/* <DOMPortal parentEl={myViewer.domRoot}></DOMPortal> */}
+                    
+                </Suspense>
+                {/* <div dangerouslySetInnerHTML={createMarkup()} /> */}
+                
             </div>
-        );
+        )
     }
 }
 
 
 
+
 // export default function MarmosetViewer(props) {
 
+//     // function createMarkup(temp) {
+//     //     return {__html: `${temp}`};
+//     // }
+
+//     // useScript('https://viewer.marmoset.co/main/marmoset.js');
+//     // marmoset.src = "../lib/marmoset.js";
+
+//     const [viewer] = useState({ viewerObj: [] });
+
 //     useEffect(() => {
-//         const marmoset = document.createElement("script");
-//         marmoset.src = "../lib/marmoset.js";
-//         marmoset.async = true;
-//         document.body.appendChild(marmoset);
+        
 //     })
+
+
+//     console.log("this is window", window);
+
+//     var params = { width: 1024, height: 768, autoStart: false };
+//     // var myviewer = window.marmoset.embed(mview, params);
+//     console.log("this is marmoset");
+//     // console.log("this is window marmoset", window.marmoset.embed());
     
-//     // const marmoset = require( './marmoset.js');
-    // var params = { width: 1024, height: 768, autoStart: false };
-    // var myviewer = marmoset.embed( "../portfolio_images/fashion_design/final/images/clothes_1.mview", params );
+//     var myViewer = new window.marmoset.WebViewer(1024, 768, mview);
+//     // var tempHolder = React.createElement("div", {className: 'container'}, myViewer.domRoot);
+
+//     console.log("this is myviewer dom root", myViewer.domRoot);
+//     console.log("this is type myviewer dom root", typeof(myViewer.domRoot));
+
+//     // var temp = JSON.stringify(myViewer.domRoot);
+
+//     // console.log("this is myviewer stringify.....", typeof(temp));
+//     // console.log("this is myviewer stringify", temp);
     
+
 
 //     return(
 //         <div>
 //             This is MarmosetViewer
-//             {myviewer}
+//             {/* <div dangerouslySetInnerHTML={createMarkup()} /> */}
+//             <div ref={ref => ref.appendChild(myViewer.domRoot)}>
+
+//             </div>
 //         </div>
 //     )
 // }
