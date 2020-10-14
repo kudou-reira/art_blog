@@ -41,22 +41,9 @@ class MarmosetViewer extends Component {
 
     
     render() {    
-        console.log("this is window", window);
-
-        var params = { width: 1024, height: 768, autoStart: false };
-        // var myviewer = window.marmoset.embed(mview, params);
-        console.log("this is marmoset");
-        // console.log("this is window marmoset", window.marmoset.embed());
-        
-        var myViewer = new window.marmoset.WebViewer(1024, 768, mview);
-        // var tempHolder = React.createElement("div", {className: 'container'}, myViewer.domRoot);
-
-        console.log("this is myviewer dom root", myViewer.domRoot);
-        console.log("this is type myviewer dom root", typeof(myViewer.domRoot));
         
         return(
             <div>
-                This is MarmosetViewer
                 <Suspense fallback={<h1>Loading...</h1>}>
                     {/* <div ref={ref => ref.appendChild(myViewer.domRoot)}> */}
                     <div ref='marmosetTarget'></div>

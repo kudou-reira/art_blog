@@ -190,8 +190,8 @@ export default withRouter(function AppWrapper(props) {
 					icon: 'N/A',
 				},
 				{
-					text: 'Character Design',
-					path: '/character_design',
+					text: 'Character Texturing',
+					path: '/character_texturing',
 					icon: 'N/A',
 				},
 				{

@@ -22,7 +22,7 @@ class RouteScreen extends Component {
 							<Route exact path="/figure_sculpting" component={defaultScreen} />
 							<Route exact path="/fashion_design" component={defaultScreen} />
 							<Route exact path="/robot_design" component={defaultScreen} />
-							<Route exact path="/character_design" component={defaultScreen} />
+							<Route exact path="/character_texturing" component={defaultScreen} />
 							<Route exact path="/3d_sketches" component={defaultScreen} />
 
 							<Route exact path="/paintings" component={defaultScreen} />

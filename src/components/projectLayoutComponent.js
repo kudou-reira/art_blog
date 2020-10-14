@@ -126,8 +126,8 @@ class ProjectLayout extends Component {
                 return this.importAll(require.context("../portfolio_images/fashion_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
             case 'robot_design':
                 return this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
-            case 'character_design':
-                return this.importAll(require.context("../portfolio_images/character_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'character_texturing':
+                return this.importAll(require.context("../portfolio_images/character_texturing/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
             case '3d_sketches':
                 return this.importAll(require.context("../portfolio_images/3d_sketches/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
             case 'paintings':
