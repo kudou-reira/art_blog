@@ -165,6 +165,11 @@ export default withRouter(function AppWrapper(props) {
 					text: 'Anime Charts',
 					path: '/anime_charts',
 					icon: 'N/A',
+				},
+				{
+					text: 'Kindle Scraper',
+					path: '/kindle_scraper',
+					icon: 'N/A',
 				}
 			]
 		},

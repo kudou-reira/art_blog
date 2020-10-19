@@ -25,7 +25,8 @@ class ProjectLayout extends Component {
             process: '',
             wip: '',
             isLoading: true,
-            photos: undefined
+            photos: undefined,
+            final_photos: undefined
         };
     }
 
@@ -49,6 +50,7 @@ class ProjectLayout extends Component {
         const { projectDetails, pathname } = this.state;
         var context = '';
         let tempPhotos = [];
+        let finalPhotos = [];
         
         if(prevState.pathname !== this.state.pathname) {
             if(pathname === '') {
@@ -59,13 +61,21 @@ class ProjectLayout extends Component {
 
             var context = this.checkSwitchPath(pathname);
             tempPhotos = await this.generatePhotos(context);
-            this.setState({ photos: tempPhotos, isLoading: false });
+            context = this.checkSwitchPathFinal(pathname);
+            finalPhotos = await this.generatePhotos(context);
+
+            this.setState({ 
+                photos: tempPhotos,
+                final_photos: finalPhotos,
+                isLoading: false 
+            });
         }
     }
 
     async componentDidMount() {
         const { projectDetails, pathname } = this.state;
         let tempPhotos = [];
+        let finalPhotos = [];
         var context = '';
         let fetchPoints = [];
         const babelLiteral = '!babel-loader!mdx-loader!';
@@ -78,9 +88,12 @@ class ProjectLayout extends Component {
 
         context = this.checkSwitchPath(pathname);
         tempPhotos = await this.generatePhotos(context);
+        context = this.checkSwitchPathFinal(pathname);
+        finalPhotos = await this.generatePhotos(context);
 
         this.setState({ 
             photos: tempPhotos, 
+            final_photos: finalPhotos,
             isLoading: false 
         });
     }
@@ -120,6 +133,8 @@ class ProjectLayout extends Component {
                 return this.importAll(require.context("../portfolio_images/style_transfer/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
             case 'anime_charts':
                 return this.importAll(require.context("../portfolio_images/anime_charts/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'kindle_scraper':
+                return this.importAll(require.context("../portfolio_images/kindle_scraper/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
             case 'figure_sculpting':
                 return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
             case 'fashion_design':
@@ -142,6 +157,45 @@ class ProjectLayout extends Component {
                 return this.importAll(require.context("../portfolio_images/home/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
         }
     }
+
+    checkSwitchPathFinal(folderPath) {
+        // webpack requires literal path at build time
+
+        switch(folderPath) {
+            case 'publications':
+                return this.importAll(require.context("../portfolio_images/publications/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'segmentation':
+                return this.importAll(require.context("../portfolio_images/segmentation/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'style_transfer':
+                return this.importAll(require.context("../portfolio_images/style_transfer/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'anime_charts':
+                return this.importAll(require.context("../portfolio_images/anime_charts/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'kindle_scraper':
+                return this.importAll(require.context("../portfolio_images/kindle_scraper/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'figure_sculpting':
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'fashion_design':
+                return this.importAll(require.context("../portfolio_images/fashion_design/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'robot_design':
+                return this.importAll(require.context("../portfolio_images/robot_design/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'character_texturing':
+                return this.importAll(require.context("../portfolio_images/character_texturing/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '3d_sketches':
+                return this.importAll(require.context("../portfolio_images/3d_sketches/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'paintings':
+                return this.importAll(require.context("../portfolio_images/paintings/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '2d_studies':
+                return this.importAll(require.context("../portfolio_images/2d_studies/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '2d_sketches':
+                return this.importAll(require.context("../portfolio_images/2d_sketches/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'figure_sculpting':
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            default:
+                return this.importAll(require.context("../portfolio_images/home/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+        }
+    }
+
+    
 
     nearestAspectRatio(width, height, side) {
         var
@@ -293,6 +347,7 @@ class ProjectLayout extends Component {
                             pathname={pathname}
                             folderPath={folderPath}
                             MarmosetViewer={<MarmosetViewer />}
+                            ImageGallery={<ImageGallery photos={this.state.final_photos} />}
                         />
                     </Suspense>
                 </div>
