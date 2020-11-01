@@ -1,4 +1,4 @@
-import mview from './images/clothes_1.mview';
+import view from './images/clothes_1.mview';
 
 This is a final render view exported from Marmoset Renderer's viewer. The textures are in 4K. The window can be manipulated by:
 
@@ -6,4 +6,6 @@ This is a final render view exported from Marmoset Renderer's viewer. The textur
 **right-click drag**: **pan**,
 **scroll-wheel**: **zoom**
 
-<div>{props.MarmosetViewer}</div>
+<div>{React.cloneElement(props.MarmosetViewer, { mview: view })}</div>
+
+{/* <div>{props.MarmosetViewer}</div> */}

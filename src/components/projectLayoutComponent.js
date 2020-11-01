@@ -26,7 +26,8 @@ class ProjectLayout extends Component {
             wip: '',
             isLoading: true,
             photos: undefined,
-            final_photos: undefined
+            final_photos: undefined,
+            process_photos: undefined
         };
     }
 
@@ -39,6 +40,8 @@ class ProjectLayout extends Component {
                     projectDetails: nextProps.projectDetails,
                     resourcePath: nextProps.resourcePath,
                     photos: undefined, 
+                    final_photos: undefined,
+                    process_photos: undefined,
                     isLoading: true 
                 });
                 console.log("true, component will receive props");
@@ -51,6 +54,7 @@ class ProjectLayout extends Component {
         var context = '';
         let tempPhotos = [];
         let finalPhotos = [];
+        let processPhotos = [];
         
         if(prevState.pathname !== this.state.pathname) {
             if(pathname === '') {
@@ -59,15 +63,20 @@ class ProjectLayout extends Component {
                 });
             }
 
-            var context = this.checkSwitchPath(pathname);
+            context = this.checkSwitchPath(pathname);
             tempPhotos = await this.generatePhotos(context);
+
             context = this.checkSwitchPathFinal(pathname);
             finalPhotos = await this.generatePhotos(context);
+
+            context = this.checkSwitchPathProcess(pathname);
+            processPhotos = await this.generatePhotos(context);
 
             this.setState({ 
                 photos: tempPhotos,
                 final_photos: finalPhotos,
-                isLoading: false 
+                process_photos: processPhotos,
+                isLoading: false
             });
         }
     }
@@ -76,11 +85,10 @@ class ProjectLayout extends Component {
         const { projectDetails, pathname } = this.state;
         let tempPhotos = [];
         let finalPhotos = [];
+        let processPhotos = [];
         var context = '';
         let fetchPoints = [];
         const babelLiteral = '!babel-loader!mdx-loader!';
-
-        console.log("this is pathname", pathname);
 
         if(pathname === '') {
 			this.setState({ pathname: 'home' });
@@ -88,12 +96,19 @@ class ProjectLayout extends Component {
 
         context = this.checkSwitchPath(pathname);
         tempPhotos = await this.generatePhotos(context);
+
         context = this.checkSwitchPathFinal(pathname);
         finalPhotos = await this.generatePhotos(context);
+
+        context = this.checkSwitchPathProcess(pathname);
+        processPhotos = await this.generatePhotos(context);
+
+        // console.log("this is process contex", context);
 
         this.setState({ 
             photos: tempPhotos, 
             final_photos: finalPhotos,
+            process_photos: processPhotos,
             isLoading: false 
         });
     }
@@ -195,7 +210,43 @@ class ProjectLayout extends Component {
         }
     }
 
-    
+    checkSwitchPathProcess(folderPath) {
+        // webpack requires literal path at build time
+
+        switch(folderPath) {
+            case 'publications':
+                return this.importAll(require.context("../portfolio_images/publications/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'segmentation':
+                return this.importAll(require.context("../portfolio_images/segmentation/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'style_transfer':
+                return this.importAll(require.context("../portfolio_images/style_transfer/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'anime_charts':
+                return this.importAll(require.context("../portfolio_images/anime_charts/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'kindle_scraper':
+                return this.importAll(require.context("../portfolio_images/kindle_scraper/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'figure_sculpting':
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'fashion_design':
+                return this.importAll(require.context("../portfolio_images/fashion_design/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'robot_design':
+                return this.importAll(require.context("../portfolio_images/robot_design/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'character_texturing':
+                return this.importAll(require.context("../portfolio_images/character_texturing/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '3d_sketches':
+                return this.importAll(require.context("../portfolio_images/3d_sketches/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'paintings':
+                return this.importAll(require.context("../portfolio_images/paintings/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '2d_studies':
+                return this.importAll(require.context("../portfolio_images/2d_studies/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case '2d_sketches':
+                return this.importAll(require.context("../portfolio_images/2d_sketches/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            case 'figure_sculpting':
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+            default:
+                return this.importAll(require.context("../portfolio_images/home/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+        }
+    }
+
 
     nearestAspectRatio(width, height, side) {
         var
@@ -282,6 +333,8 @@ class ProjectLayout extends Component {
 
         console.log("intermediary photos", photos);
 
+        // sort here?
+
         return photos;
     }
 
@@ -312,7 +365,7 @@ class ProjectLayout extends Component {
             // var context = this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
 
             console.log("before");
-            console.log("this is context", context);
+            console.log("this is context wip", context);
     
     
             // create the new photo array here
@@ -339,7 +392,38 @@ class ProjectLayout extends Component {
             )             
         }
 
+        if (folderPath === 'process') {
+            console.log("hi")
+            if(isLoading) {
+                return(
+                    <div >
+                        Loading...
+                    </div>
+                )
+            }
+            console.log("this is context wip", context);
+            return (
+                <div>
+                    <Suspense fallback={<h1>Loading...</h1>}>
+                        <MdFile
+                            pathname={pathname}
+                            folderPath={folderPath}
+                            ImageGallery={<ImageGallery photos={this.state.process_photos} />}
+                        />
+                    </Suspense>
+                </div>
+            )    
+        }
+
         if (folderPath === 'final') {
+            if(isLoading) {
+                return(
+                    <div >
+                        Loading...
+                    </div>
+                )
+            }
+
             return (
                 <div>
                     <Suspense fallback={<h1>Loading...</h1>}>
@@ -387,6 +471,7 @@ class ProjectLayout extends Component {
                 <Typography variant="h4" gutterBottom>
                     {obj.text}
                     <Typography gutterBottom>
+                        {/* add modal bound */}
                         {this.renderDetails(pathname  + "/" + obj.folder_path, obj.folder_path, projectAll)}
                     </Typography>
                 </Typography>
