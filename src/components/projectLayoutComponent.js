@@ -141,35 +141,33 @@ class ProjectLayout extends Component {
 
         switch(folderPath) {
             case 'publications':
-                return this.importAll(require.context("../portfolio_images/publications/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/publications/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'segmentation':
-                return this.importAll(require.context("../portfolio_images/segmentation/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/segmentation/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'style_transfer':
-                return this.importAll(require.context("../portfolio_images/style_transfer/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/style_transfer/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'anime_charts':
-                return this.importAll(require.context("../portfolio_images/anime_charts/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/anime_charts/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'kindle_scraper':
-                return this.importAll(require.context("../portfolio_images/kindle_scraper/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/kindle_scraper/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'fashion_design':
-                return this.importAll(require.context("../portfolio_images/fashion_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/fashion_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'robot_design':
-                return this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/robot_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'character_texturing':
-                return this.importAll(require.context("../portfolio_images/character_texturing/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/character_texturing/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case '3d_sketches':
-                return this.importAll(require.context("../portfolio_images/3d_sketches/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/3d_sketches/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'paintings':
-                return this.importAll(require.context("../portfolio_images/paintings/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/paintings/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case '2d_studies':
-                return this.importAll(require.context("../portfolio_images/2d_studies/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
-            case '2d_sketches':
-                return this.importAll(require.context("../portfolio_images/2d_sketches/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/2d_studies/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             default:
-                return this.importAll(require.context("../portfolio_images/home/wip/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/home/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
         }
     }
 
@@ -178,35 +176,33 @@ class ProjectLayout extends Component {
 
         switch(folderPath) {
             case 'publications':
-                return this.importAll(require.context("../portfolio_images/publications/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/publications/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'segmentation':
-                return this.importAll(require.context("../portfolio_images/segmentation/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/segmentation/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'style_transfer':
-                return this.importAll(require.context("../portfolio_images/style_transfer/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/style_transfer/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'anime_charts':
-                return this.importAll(require.context("../portfolio_images/anime_charts/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/anime_charts/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'kindle_scraper':
-                return this.importAll(require.context("../portfolio_images/kindle_scraper/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/kindle_scraper/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'fashion_design':
-                return this.importAll(require.context("../portfolio_images/fashion_design/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/fashion_design/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'robot_design':
-                return this.importAll(require.context("../portfolio_images/robot_design/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/robot_design/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'character_texturing':
-                return this.importAll(require.context("../portfolio_images/character_texturing/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/character_texturing/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case '3d_sketches':
-                return this.importAll(require.context("../portfolio_images/3d_sketches/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/3d_sketches/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'paintings':
-                return this.importAll(require.context("../portfolio_images/paintings/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/paintings/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case '2d_studies':
-                return this.importAll(require.context("../portfolio_images/2d_studies/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
-            case '2d_sketches':
-                return this.importAll(require.context("../portfolio_images/2d_sketches/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/2d_studies/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             default:
-                return this.importAll(require.context("../portfolio_images/home/final/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/home/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
         }
     }
 
@@ -215,35 +211,33 @@ class ProjectLayout extends Component {
 
         switch(folderPath) {
             case 'publications':
-                return this.importAll(require.context("../portfolio_images/publications/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/publications/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'segmentation':
-                return this.importAll(require.context("../portfolio_images/segmentation/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/segmentation/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'style_transfer':
-                return this.importAll(require.context("../portfolio_images/style_transfer/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/style_transfer/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'anime_charts':
-                return this.importAll(require.context("../portfolio_images/anime_charts/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/anime_charts/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'kindle_scraper':
-                return this.importAll(require.context("../portfolio_images/kindle_scraper/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/kindle_scraper/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'fashion_design':
-                return this.importAll(require.context("../portfolio_images/fashion_design/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/fashion_design/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'robot_design':
-                return this.importAll(require.context("../portfolio_images/robot_design/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/robot_design/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'character_texturing':
-                return this.importAll(require.context("../portfolio_images/character_texturing/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/character_texturing/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case '3d_sketches':
-                return this.importAll(require.context("../portfolio_images/3d_sketches/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/3d_sketches/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'paintings':
-                return this.importAll(require.context("../portfolio_images/paintings/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/paintings/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case '2d_studies':
-                return this.importAll(require.context("../portfolio_images/2d_studies/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
-            case '2d_sketches':
-                return this.importAll(require.context("../portfolio_images/2d_sketches/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/2d_studies/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/figure_sculpting/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             default:
-                return this.importAll(require.context("../portfolio_images/home/process/images/", true, /\.(PNG|JPE?G|SVG)$/));
+                return this.importAll(require.context("../portfolio_images/home/process/images/", true, /\.(PNG|JPE?G|SVG)$/i));
         }
     }
 

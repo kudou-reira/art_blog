@@ -28,7 +28,6 @@ class RouteScreen extends Component {
 
 							<Route exact path="/paintings" component={defaultScreen} />
 							<Route exact path="/2d_studies" component={defaultScreen} />
-							<Route exact path="/2d_sketches" component={defaultScreen} />
 
 							<Route exact path="/about" component={defaultScreen} />
 						</Switch>

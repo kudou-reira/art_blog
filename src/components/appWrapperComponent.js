@@ -221,12 +221,7 @@ export default withRouter(function AppWrapper(props) {
 					text: 'Studies',
 					path: '/2d_studies',
 					icon: 'N/A',
-				},
-				{
-					text: '2D sketches/ideas',
-					path: '/2d_sketches',
-					icon: 'N/A',
-				},
+				}
 			],
 		},
 		{
