@@ -140,6 +140,8 @@ class ProjectLayout extends Component {
         // webpack requires literal path at build time
 
         switch(folderPath) {
+            case 'about':
+                return this.importAll(require.context("../portfolio_images/about/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'publications':
                 return this.importAll(require.context("../portfolio_images/publications/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'segmentation':

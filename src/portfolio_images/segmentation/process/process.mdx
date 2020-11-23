@@ -1,1 +1,9 @@
-<div>{props.ImageGallery}</div>
+The entire project was wrapped in a docker-compose with all routes managed by nginx. I can't show the code here, but a subsequent project that I did later ([Style Transfer](https://github.com/kudou-reira/stylish)) used the same underlying structure for this project.
+
+The front-end was handled by a simple React page. It served three main functions. The first being an area where users could upload their image as well as adjust hyperparameters for the segmentation. The second purpose was to act as a routing page that would display each user's images and their corresponding segmentations. The final function was to allow users to leave their feedback and ratings of the segmentation as well as the user interface.
+
+Once users uploaded their image, it would be sent to a Python Flask server which would then assign the image to a job queue managed by celery queue. This was so that the in-house company servers hosting the GPUs would not crash under too much load. The Flask server would then also alert the user when their image was finished being processed. A custom link (relative to their job queue ID) would be sent by email.
+
+In the results page of the front-end application, an interval-by-interval image sequence of the gradual segmentation would be displayed. Furthermore, the amount of distinct shapes in that particular image would be displayed under each interval segmentation.
+
+Lastly, I set up a Go server with a Mongo database that would record the number ratings of each user as well as string feedback. 

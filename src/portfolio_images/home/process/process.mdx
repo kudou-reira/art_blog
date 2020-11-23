@@ -1,0 +1,5 @@
+When creating this site, I wanted to employ re-usable components which would render markdown files for each project page. This way, I wouldn't have to hard code each page in HTML/JavaScript, or load external files into templates (ex. Jinja, Django).  However, inside of these markdown files, I still wanted to do minimal JavasSript manipulation.
+
+To remedy this, I used [.mdx](https://github.com/mdx-js/mdx) files. An example [file](https://github.com/kudou-reira/portfolio/blob/master/src/portfolio_images/fashion_design/final/final.mdx) from this site's repository shows how JSX syntax (like the syntax used in React) can be integrated into markdown files. This gave me the right amount of automatic dynamic loading and additional custom modifications within each .mdx file.
+
+Most pages either include screenshots or videos. In the case of images, the files can be opened into a carousel, and then panned through with arrow keys.
