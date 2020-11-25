@@ -8,6 +8,7 @@ import { requirePropFactory } from '@material-ui/core';
 
 import ImageGallery from './imageGalleryComponent';
 import MarmosetViewer from './marmosetViewerComponent';
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import HTML from '../portfolio_images/fashion_design/final/images/clothes_1.html';
 
 
@@ -370,14 +371,14 @@ class ProjectLayout extends Component {
             if(isLoading) {
                 return(
                     <div >
-                        Loading...
+                        <CircularProgress />
                     </div>
                 )
             }
 
             return (
                 <div>
-                    <Suspense fallback={<h1>Loading...</h1>}>
+                    <Suspense fallback={<h1><CircularProgress /></h1>}>
                         <MdFile
                             pathname={pathname}
                             folderPath={folderPath}
@@ -393,14 +394,14 @@ class ProjectLayout extends Component {
             if(isLoading) {
                 return(
                     <div >
-                        Loading...
+                        <CircularProgress />
                     </div>
                 )
             }
             console.log("this is context wip", context);
             return (
                 <div>
-                    <Suspense fallback={<h1>Loading...</h1>}>
+                    <Suspense fallback={<h1><CircularProgress /></h1>}>
                         <MdFile
                             pathname={pathname}
                             folderPath={folderPath}
@@ -415,14 +416,14 @@ class ProjectLayout extends Component {
             if(isLoading) {
                 return(
                     <div >
-                        Loading...
+                        <CircularProgress />
                     </div>
                 )
             }
 
             return (
                 <div>
-                    <Suspense fallback={<h1>Loading...</h1>}>
+                    <Suspense fallback={<h1><CircularProgress /></h1>}>
                         <MdFile
                             pathname={pathname}
                             folderPath={folderPath}
@@ -436,7 +437,7 @@ class ProjectLayout extends Component {
 
         return(
             <div>
-                <Suspense fallback={<h1>Loading...</h1>}>
+                <Suspense fallback={<h1><CircularProgress /></h1>}>
                     <MdFile
                         pathname={pathname}
                         folderPath={folderPath}
