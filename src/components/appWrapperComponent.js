@@ -200,6 +200,16 @@ export default withRouter(function AppWrapper(props) {
 					icon: 'N/A',
 				},
 				{
+					text: 'Mystical City',
+					path: '/mystical_city',
+					icon: 'N/A',
+				},
+				{
+					text: 'Octopus Study',
+					path: '/octopus_study',
+					icon: 'N/A',
+				},
+				{
 					text: '3D sketches/ideas',
 					path: '/3d_sketches',
 					icon: 'N/A',

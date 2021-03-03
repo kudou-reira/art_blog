@@ -153,8 +153,10 @@ class ProjectLayout extends Component {
                 return this.importAll(require.context("../portfolio_images/anime_charts/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'kindle_scraper':
                 return this.importAll(require.context("../portfolio_images/kindle_scraper/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
-            case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
+            case 'mystical_city':
+                return this.importAll(require.context("../portfolio_images/mystical_city/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
+            case 'octopus_study':
+                    return this.importAll(require.context("../portfolio_images/octopus_study/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'fashion_design':
                 return this.importAll(require.context("../portfolio_images/fashion_design/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'robot_design':
@@ -188,8 +190,10 @@ class ProjectLayout extends Component {
                 return this.importAll(require.context("../portfolio_images/anime_charts/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'kindle_scraper':
                 return this.importAll(require.context("../portfolio_images/kindle_scraper/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
-            case 'figure_sculpting':
-                return this.importAll(require.context("../portfolio_images/figure_sculpting/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
+            case 'mystical_city':
+                return this.importAll(require.context("../portfolio_images/mystical_city/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
+            case 'octopus_study':
+                return this.importAll(require.context("../portfolio_images/octopus_study/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'fashion_design':
                 return this.importAll(require.context("../portfolio_images/fashion_design/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'robot_design':
