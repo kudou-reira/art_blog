@@ -205,6 +205,11 @@ export default withRouter(function AppWrapper(props) {
 					icon: 'N/A',
 				},
 				{
+					text: 'Cathedral Sculpture',
+					path: '/cathedral_sculpture',
+					icon: 'N/A',
+				},
+				{
 					text: 'Octopus Study',
 					path: '/octopus_study',
 					icon: 'N/A',
@@ -230,6 +235,16 @@ export default withRouter(function AppWrapper(props) {
 				{
 					text: 'Studies',
 					path: '/2d_studies',
+					icon: 'N/A',
+				},
+				{
+					text: '2D Motion Graphics',
+					path: 'motion_graphics',
+					icon: 'N/A',
+				},
+				{
+					text: 'Photography',
+					path: 'photography',
 					icon: 'N/A',
 				}
 			],
