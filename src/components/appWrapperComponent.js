@@ -200,8 +200,8 @@ export default withRouter(function AppWrapper(props) {
 					icon: 'N/A',
 				},
 				{
-					text: 'Octopus Study',
-					path: '/octopus_study',
+					text: 'Character Texturing',
+					path: '/character_texturing',
 					icon: 'N/A',
 				},
 				{
@@ -210,8 +210,8 @@ export default withRouter(function AppWrapper(props) {
 					icon: 'N/A',
 				},
 				{
-					text: 'Character Texturing',
-					path: '/character_texturing',
+					text: 'Octopus Study',
+					path: '/octopus_study',
 					icon: 'N/A',
 				},
 				{
