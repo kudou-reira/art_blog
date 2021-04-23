@@ -157,8 +157,8 @@ class ProjectLayout extends Component {
                 return this.importAll(require.context("../portfolio_images/mystical_city/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'octopus_study':
                     return this.importAll(require.context("../portfolio_images/octopus_study/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
-            case 'cathedral_sculpture':
-                return this.importAll(require.context("../portfolio_images/cathedral_sculpture/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
+            case 'basilica_sculpture':
+                return this.importAll(require.context("../portfolio_images/basilica_sculpture/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'motion_graphics':
                 return this.importAll(require.context("../portfolio_images/motion_graphics/wip/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'photography':
@@ -200,8 +200,8 @@ class ProjectLayout extends Component {
                 return this.importAll(require.context("../portfolio_images/mystical_city/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'octopus_study':
                 return this.importAll(require.context("../portfolio_images/octopus_study/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
-            case 'cathedral_sculpture':
-                return this.importAll(require.context("../portfolio_images/cathedral_sculpture/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
+            case 'basilica_sculpture':
+                return this.importAll(require.context("../portfolio_images/basilica_sculpture/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'motion_graphics':
                 return this.importAll(require.context("../portfolio_images/motion_graphics/final/images/", true, /\.(PNG|JPE?G|SVG)$/i));
             case 'photography':

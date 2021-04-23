@@ -185,8 +185,8 @@ export default withRouter(function AppWrapper(props) {
 					icon: 'N/A',
 				},
 				{
-					text: 'Fashion Design',
-					path: '/fashion_design',
+					text: 'Basilica Sculpture',
+					path: '/basilica_sculpture',
 					icon: 'N/A',
 				},
 				{
@@ -195,23 +195,23 @@ export default withRouter(function AppWrapper(props) {
 					icon: 'N/A',
 				},
 				{
-					text: 'Character Texturing',
-					path: '/character_texturing',
-					icon: 'N/A',
-				},
-				{
 					text: 'Mystical City',
 					path: '/mystical_city',
 					icon: 'N/A',
 				},
 				{
-					text: 'Cathedral Sculpture',
-					path: '/cathedral_sculpture',
+					text: 'Octopus Study',
+					path: '/octopus_study',
 					icon: 'N/A',
 				},
 				{
-					text: 'Octopus Study',
-					path: '/octopus_study',
+					text: 'Fashion Design',
+					path: '/fashion_design',
+					icon: 'N/A',
+				},
+				{
+					text: 'Character Texturing',
+					path: '/character_texturing',
 					icon: 'N/A',
 				},
 				{
